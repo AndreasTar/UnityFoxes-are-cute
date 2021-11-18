@@ -11,13 +11,14 @@ public class PlayerMovement : MonoBehaviour
     public float gravity = -9.81f;
     public float jumpHeight = 3f;
 
+    [Range(0.001f, 1)]
     public float turnSmoothTime = 0.5f;
     float turnSmoothVel;
 
     public CharacterController cC;
     public Transform groundCheck;
 
-    public float groundDistance = 0.4f;
+    public float groundDistance = 0.01f;
     public LayerMask groundMask;
     bool isGrounded;
 
@@ -34,10 +35,10 @@ public class PlayerMovement : MonoBehaviour
 
         // isGrounded check
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        if(isGrounded && velocity.y < 0)
+        /*if(isGrounded && velocity.y < 0)
         {
             velocity.y = -0.1f;
-        }
+        }*/
 
         if(isGrounded || debugMode)
         {
@@ -51,10 +52,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // gravity logic
-        velocity.y += gravity * Time.deltaTime;
+        velocity.y += !isGrounded ? gravity * Time.deltaTime : 0f;
         cC.Move(velocity * Time.deltaTime);
 
-        if (direction.magnitude >= 0.1f && (isGrounded || debugMode))
+        if (direction.magnitude >= 0.1f || debugMode)
         {
             // rotation smoothing
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
