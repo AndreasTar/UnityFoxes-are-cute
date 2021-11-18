@@ -28,6 +28,8 @@
 
 # Logs directory
 .Logs/
+*.log
+*.exe[0123456789].log
 
 # Gradle cache directory
 .gradle/
@@ -49,8 +51,6 @@ ExportedObj/
 *.mdb
 *.opendb
 *.VC.db
-*.log
-*.exe*.log
 
 # Unity3D generated meta files
 *.pidb.meta
